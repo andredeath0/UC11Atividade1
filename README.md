@@ -1,0 +1,28 @@
+# Nome do Projeto
+
+Leiloes TDSat - UC 11
+
+## Explicação do Projeto
+
+Projeto feito em java, utilizando banco de Dados e usado para praticar o versionamento local e remoto
+
+## Tecnologias utilizadas
+
+- Java
+- MySQL
+
+## Exemplo de Código de conexão
+
+```java
+public class conectaDAO {
+        public Connection connectDB(){
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/uc11?user=root&password=");
+        } catch (SQLException erro){
+            JOptionPane.showMessageDialog(null, "Erro ConectaDAO" + erro.getMessage());
+        }
+        return conn;
+    }
+}
+```
