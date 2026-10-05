@@ -7,6 +7,8 @@
  *
  * @author Adm
  */
+import javax.swing.JOptionPane;
+
 public class cadastroVIEW extends javax.swing.JFrame {
 
     /**
@@ -140,17 +142,40 @@ public class cadastroVIEW extends javax.swing.JFrame {
     }//GEN-LAST:event_cadastroNomeActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        ProdutosDTO produto = new ProdutosDTO();
-        String nome = cadastroNome.getText();
-        String valor = cadastroValor.getText();
-        String status = "A Venda";
-        produto.setNome(nome);
-        produto.setValor(Integer.parseInt(valor));
-        produto.setStatus(status);
-        
-        ProdutosDAO produtodao = new ProdutosDAO();
-        produtodao.cadastrarProduto(produto);
-        
+try {
+    // 1. Receber os valores do ecrã
+    String nome = cadastroNome.getText();
+    // Agora convertemos para int (inteiro) em vez de double
+    int valor = Integer.parseInt(cadastroValor.getText());
+    
+    // Status padrão para novos cadastros
+    String status = "A Venda";
+
+    // 2. Passar os valores para a classe DTO
+    ProdutosDTO produto = new ProdutosDTO();
+    produto.setNome(nome);
+    produto.setValor(valor);
+    produto.setStatus(status);
+
+    // 3. Chamar a classe DAO para guardar na base de dados
+    ProdutosDAO produtodao = new ProdutosDAO();
+    produtodao.cadastrarProduto(produto);
+
+    // 4. Mensagem de sucesso!
+    JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso!");
+    
+    // Limpar os campos após o registo
+    cadastroNome.setText("");
+    cadastroValor.setText("");
+    cadastroNome.requestFocus();
+
+} catch (NumberFormatException e) {
+    // Mensagem de erro caso o utilizador introduza letras ou números decimais
+    JOptionPane.showMessageDialog(null, "Erro: O campo 'Valor' deve conter apenas números inteiros válidos (sem vírgulas ou pontos).");
+} catch (Exception e) {
+    // Mensagem de erro genérica
+    JOptionPane.showMessageDialog(null, "Erro ao cadastrar produto: " + e.getMessage());
+}     
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProdutosActionPerformed
